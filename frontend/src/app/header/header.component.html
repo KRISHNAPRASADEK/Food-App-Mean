@@ -1,0 +1,266 @@
+<!-- Navigation-->
+<nav
+  class="navbar fixed-top navbar-expand-lg navbar-light bg-danger"
+  data-bs-theme="dark"
+>
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" routerLink="">
+      <img
+        width="50px"
+        src="https://cdn-icons-png.flaticon.com/512/2331/2331966.png"
+        alt=""
+      />&nbsp;<b> Food Ordering App</b>
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="me-auto mb-lg-0 ms-lg-4"></ul>
+      <ul class="navbar-nav mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item">
+          <form class="d-flex">
+            <input
+              type="text"
+              placeholder="search for products"
+              class="form-control"
+            />
+          </form>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/wish-list"
+            >&nbsp; &nbsp;<i class="fa-solid fa-heart"></i> Wish List</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="view-cart"
+            >&nbsp; &nbsp;<i class="fa-solid fa-cart-plus"></i> Cart
+            <span class="badge bg-white text-dark rounded-pill">0</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link active dropdown-item btn"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+            >&nbsp; &nbsp;<i class="fa-solid fa-user"></i> Login</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- modal for login -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="fw-bold modal-title s-5" id="staticBackdropLabel">Login</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsBChUr8Nod7bNKV2pWb05nSgEMD2PKHiQuA&usqp=CAU"
+            alt="no image"
+          />
+        </div>
+        <form class="p-3">
+          <div class="form-floating mb-2">
+            <input
+              name="email"
+              formControlName="email"
+              placeholder="Enter Your Email"
+              id="floatingName"
+              type="text"
+              class="form-control"
+            />
+            <label for="floatingName">Enter Your Email ID</label>
+          </div>
+          <!-- <div
+            *ngIf="
+              this.fundTransferForm.get('toAcno')?.errors &&
+              this.fundTransferForm.get('toAcno')?.touched
+            "
+            class="text-danger mb-2"
+          >
+            Invalid Account Number
+          </div> -->
+          <div class="form-floating mt-4 mb-2">
+            <input
+              name="pswd"
+              formControlName="pswd"
+              placeholder="Profile Password"
+              id="floatingPassword"
+              type="password"
+              class="form-control"
+            />
+            <label for="floatingPassword">Enter Your Password</label>
+          </div>
+          <!-- <div
+            *ngIf="
+              this.fundTransferForm.get('pswd')?.errors &&
+              this.fundTransferForm.get('pswd')?.touched
+            "
+            class="text-danger mb-2"
+          >
+            Invalid Password
+          </div> -->
+        </form>
+        <span class="ms-3">
+          New User? Click Here to
+          <a
+            class="text-primary"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop1"
+            >Register</a
+          >
+        </span>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal for Register -->
+<div
+  class="modal fade"
+  id="staticBackdrop1"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="fw-bold modal-title s-5" id="staticBackdropLabel">
+          Register here
+        </h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsBChUr8Nod7bNKV2pWb05nSgEMD2PKHiQuA&usqp=CAU"
+            alt="no image"
+          />
+        </div>
+        <form class="p-3">
+          <div class="form-floating mb-2">
+            <input
+              name="name"
+              formControlName="name"
+              placeholder="Enter Your Name"
+              id="floatingName"
+              type="text"
+              class="form-control"
+            />
+            <label for="floatingName">Enter Your Name</label>
+          </div>
+          <!-- <div
+            *ngIf="
+              this.fundTransferForm.get('toAcno')?.errors &&
+              this.fundTransferForm.get('toAcno')?.touched
+            "
+            class="text-danger mb-2"
+          >
+            Invalid Account Number
+          </div> -->
+          <div class="form-floating mb-2">
+            <input
+              name="email"
+              formControlName="email"
+              placeholder="Enter Your Email"
+              id="floatingEmail"
+              type="email"
+              class="form-control"
+            />
+            <label for="floatingEmail">Enter Your Email ID</label>
+          </div>
+          <!-- <div
+            *ngIf="
+              this.fundTransferForm.get('toAcno')?.errors &&
+              this.fundTransferForm.get('toAcno')?.touched
+            "
+            class="text-danger mb-2"
+          >
+            Invalid Account Number
+          </div> -->
+          <div class="form-floating mb-2">
+            <input
+              name="pswd"
+              formControlName="pswd"
+              placeholder="Profile Password"
+              id="floatingPassword"
+              type="password"
+              class="form-control"
+            />
+            <label for="floatingPassword">Enter Your Password</label>
+          </div>
+          <!-- <div
+            *ngIf="
+              this.fundTransferForm.get('pswd')?.errors &&
+              this.fundTransferForm.get('pswd')?.touched
+            "
+            class="text-danger mb-2"
+          >
+            Invalid Password
+          </div> -->
+        </form>
+        <span class="ms-3">
+          Existing User?
+          <a
+            class="text-primary"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+            >Log in</a
+          >
+        </span>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" class="btn btn-primary">Register</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+.card-body .fa:hover {
+  cursor: pointer;
+}
+.card-body .text-danger:hover {
+  cursor: pointer;
+}
