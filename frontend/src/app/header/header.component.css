@@ -1,0 +1,14 @@
+.profile li a {
+  cursor: pointer;
+}
+#mainNav {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #fff;
+}
+.bg {
+  background: #ffcccb !important;
+}
+.navbar-brand {
+  font-family: "Roboto", sans-serif;
+}

@@ -2,10 +2,17 @@
   opacity: 1;
   -webkit-transition: 0.3s ease-in-out;
   transition: 0.3s ease-in-out;
+  height: 200px;
+  object-fit: cover;
 }
 .card img:hover {
   opacity: 0.5;
 }
 .card:hover {
   cursor: pointer;
+  transform: scale(1.05);
+  transition: 0.3s ease-in-out;
+}
+.app-badge {
+  margin-left: -120px;
 }

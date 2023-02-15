@@ -1,31 +1,102 @@
 <!-- Section-->
 <section class="py-5">
   <div class="container px-2 px-lg-2 mt-5">
+    <!-- Mashead header-->
+    <header class="masthead">
+      <div class="container px-5">
+        <div class="row gx-5 align-items-center">
+          <div class="col-lg-6">
+            <!-- Mashead text and app badges-->
+            <div class="mb-5 mb-lg-0 text-center text-lg-start">
+              <h1 *ngIf="!username" class="display-2 fw-bolder lh-1 mb-3">
+                It's not just food, it's an experience.
+              </h1>
+              <h1 *ngIf="username" class="display-4 fw-bolder lh-1 mb-3">
+                <span class="text-danger">Hey {{ username }}</span
+                >, Hungry? Make it Happy!
+              </h1>
+              <p class="lead fw-normal text-muted mb-5">
+                When you're hungry, we'll be your best friend with a bag full of
+                warm food from our kitchen to yours.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-6 align-items-center">
+            <img
+              class="app-badge"
+              src="https://i.ibb.co/hyr30nF/My-project.png"
+              alt="app-badge"
+            />
+          </div>
+        </div>
+      </div>
+    </header>
     <div
       class="row gx-4 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
     >
-      <div class="col mb-5">
-        <div class="card h-100">
+      <div
+        class="col mb-5"
+        *ngFor="let product of products | filter : searchItem : 'title'"
+      >
+        <div *ngIf="product === -1" class="d-flex mt-5 justify-content-center">
+          <div class="text-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1178/1178479.png"
+              alt=""
+              width="100px"
+            />
+            <p class="fs-3">
+              <span class="text-danger">Sorry, no results found! </span>
+            </p>
+            <p class="lead" style="width: 100vw">
+              Please check the spelling or try searching for something else
+            </p>
+            <!-- <a routerLink="" class="btn btn-danger">Go Home</a> -->
+          </div>
+        </div>
+
+        <div *ngIf="product !== -1" class="card h-100 shadow bg-white rounded">
           <!-- Product image-->
           <img
+            height="100px"
             class="card-img-top"
-            src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-            alt="..."
+            [src]="product.image"
+            [alt]="product.title"
           />
           <!-- Product details-->
           <div class="card-body p-3">
             <div class="float-start">
               <!-- Product name-->
-              <h5 class="mb-2 fw-bolder text-danger">Fancy Product</h5>
-              <span class="bg-light p-1 rounded-pill">Fast Food</span>
+              <h5 class="mb-2 fw-bolder text-danger">{{ product.title }}</h5>
+              <span class="bg-light p-1 rounded-pill">{{
+                product.category
+              }}</span>
               <!-- Product price-->
-              <h5 class="mt-2">$40.00 - $80.00</h5>
+              <h5 class="mt-2">${{ product.price }}</h5>
             </div>
             <div class="float-end">
-              <span class="ms-5 text-danger"><i class="fa fa-heart"></i> </span>
+              <span
+                *ngIf="!email"
+                class="ms-5 text-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                ><i class="fa fa-heart"></i>
+              </span>
+              <span
+                (click)="removeFromWishlist(product.id)"
+                *ngIf="email && wishlist.indexOf(product.id) >= 0"
+                class="ms-5 text-danger"
+                ><i class="fa fa-heart"></i>
+              </span>
+              <span
+                (click)="addToWishlist(product.id)"
+                *ngIf="email && wishlist.indexOf(product.id) == -1"
+                class="ms-5 text-secondary"
+                ><i class="fa fa-heart"></i>
+              </span>
               <br />
-              <div class="text-danger mt-3">
-                <i class="fa-regular fa-clock"></i> 20-30
+              <div class="text-danger mt-3 ms-4">
+                <i class="fa-regular fa-star"></i> {{ product.rating.rate }}
               </div>
             </div>
           </div>
@@ -34,7 +105,7 @@
             <div class="text-center">
               <a
                 class="btn btn-outline-danger mt-auto w-100"
-                routerLink="/view-product/1"
+                routerLink="/view-product/{{ product.id }}"
                 >View options</a
               >
             </div>
@@ -44,3 +115,29 @@
     </div>
   </div>
 </section>
+
+<!-- Modal for login alert wishlist -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3 bg-danger-subtle">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">
+          <i class="fa-solid fa-user-plus me-3"></i>
+          <strong>Please Login for wishlisting a product !</strong>
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>

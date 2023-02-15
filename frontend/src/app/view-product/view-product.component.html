@@ -2,33 +2,80 @@
 <section class="py-5 mt-5">
   <div class="container px-3 px-lg-5 my-3">
     <div class="row gx-4 gx-lg-4 align-items-center">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <img
-          class="card-img-top mb-5 mb-md-0 w-75"
-          src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"
+          class="card-img-top mb-5 mb-md-0 rounded"
+          [src]="product.image"
+          [alt]="product.title"
         />
       </div>
+      <div class="col-md-1"></div>
       <div class="col-md-6">
         <h1 class="display-6 fw-bolder text-danger">
-          Shop item template
-          <span class="float-end text-danger"
+          {{ product.title }}
+          <span
+            *ngIf="!email"
+            class="float-end text-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            ><i class="fa fa-heart"></i>
+          </span>
+          <span
+            (click)="removeFromWishlist(product.id)"
+            *ngIf="email && wishlist.indexOf(product.id) >= 0"
+            class="float-end text-danger"
             ><i class="fa fa-heart-circle-minus"></i>
+          </span>
+          <span
+            (click)="addToWishlist(product.id)"
+            *ngIf="email && wishlist.indexOf(product.id) == -1"
+            class="float-end text-secondary"
+            ><i class="fa fa-heart-circle-plus"></i>
           </span>
         </h1>
         <div class="fs-5 mb-3">
-          <span class="text-decoration-line-through">$50.00</span>
-          <span> $40.00</span>
+          <span class="text-decoration-line-through"
+            >${{ (product.price + 10).toFixed(2) }}</span
+          >
+          <span> ${{ product.price }}</span>
+          <span class="bg-light p-1 rounded-pill ms-5">{{
+            product.category
+          }}</span>
         </div>
         <p style="text-align: justify" class="lead">
           <span class="fs-4 text-danger">Product Features: </span> <br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
-          at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi
-          alias magni, accusamus eius blanditiis delectus ipsam minima ea iste
-          laborum vero?
+          {{ product.description.slice(0, 250) }}
         </p>
-        <p class="fw-bolder">Rating: 6.7</p>
+        <p class="fs-5">
+          <i class="fa-regular fa-star text-danger me-1"></i>
+          <span>{{ product.rating.rate }}</span>
+        </p>
         <div class="d-flex">
-          <button class="btn btn-danger flex-shrink-0 w-100" type="button">
+          <button
+            *ngIf="!email"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal2"
+            class="btn btn-danger flex-shrink-0 w-100"
+            type="button"
+          >
+            <i class="fa-solid fa-cart-plus"></i>
+            Add to cart
+          </button>
+          <button
+            (click)="removeFromCart(product.id)"
+            *ngIf="email && cart.indexOf(product.id) >= 0"
+            class="btn btn-danger flex-shrink-0 w-100"
+            type="button"
+          >
+            <i class="fa-solid fa-ban"></i>
+            Remove from cart
+          </button>
+          <button
+            (click)="addToCart(product.id)"
+            *ngIf="email && cart.indexOf(product.id) == -1"
+            class="btn btn-success flex-shrink-0 w-100"
+            type="button"
+          >
             <i class="fa-solid fa-cart-plus"></i>
             Add to cart
           </button>
@@ -37,3 +84,54 @@
     </div>
   </div>
 </section>
+
+<!-- Modal for login alert wishlist -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3 bg-danger-subtle">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">
+          <i class="fa-solid fa-user-plus me-3"></i>
+          <strong>Please Login for wishlisting a product !</strong>
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModal2"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3 bg-danger-subtle">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">
+          <i class="fa-solid fa-user-plus me-3"></i>
+          <strong>Please Login for add to cart !</strong>
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>

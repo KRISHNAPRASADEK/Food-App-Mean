@@ -1,16 +1,35 @@
+<div
+  *ngIf="!email"
+  class="d-flex align-items-center justify-content-center"
+  style="min-height: 100vh"
+>
+  <div class="text-center">
+    <img
+      src="https://startup.mp.gov.in/assets/img/login-bg.png"
+      alt=""
+      width="350px"
+    />
+    <p class="fs-1">
+      <span class="text-danger fw-bolder">Please Login ! </span>
+    </p>
+    <p class="lead">Get access to your Orders, Wishlist and Recommendations</p>
+    <a routerLink="" class="btn btn-danger">Go Home</a>
+  </div>
+</div>
+
 <!--Wishlist  Section-->
-<section class="py-5">
+<section *ngIf="email" class="py-5">
   <div class="container px-2 px-lg-2 mt-5">
     <div
       class="row gx-4 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
     >
-      <div class="col mb-5">
+      <div class="col mb-5" *ngFor="let product of products">
         <div class="card h-100">
           <!-- Product image-->
           <img
             class="card-img-top"
-            src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-            alt="..."
+            [src]="product.image"
+            [alt]="product.title"
           />
           <!-- Product details-->
           <div class="card-body p-3">
@@ -20,11 +39,11 @@
                 class="mb-2 fw-bolder text-danger"
                 routerLink="/view-product/1"
               >
-                Fancy Product
+                {{ product.title }}
               </h5>
               <span class="bg-light p-1 rounded-pill">Fast Food</span>
               <!-- Product price-->
-              <h5 class="mt-2">$40.00 - $80.00</h5>
+              <h5 class="mt-2">${{ product.price }}</h5>
             </div>
             <div class="float-end">
               <span class="ms-4 text-danger"

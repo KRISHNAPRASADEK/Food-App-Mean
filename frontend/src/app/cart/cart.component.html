@@ -1,65 +1,129 @@
+<div
+  *ngIf="!email"
+  class="d-flex align-items-center justify-content-center"
+  style="min-height: 100vh"
+>
+  <div class="text-center">
+    <img
+      src="https://startup.mp.gov.in/assets/img/login-bg.png"
+      alt=""
+      width="350px"
+    />
+    <p class="fs-1">
+      <span class="text-danger fw-bolder">Please Login ! </span>
+    </p>
+    <p class="lead">Get access to your Orders, Wishlist and Recommendations</p>
+    <a routerLink="" class="btn btn-danger">Go Home</a>
+  </div>
+</div>
+<div
+  *ngIf="email && cart.length == 0"
+  class="d-flex align-items-center justify-content-center"
+  style="min-height: 100vh"
+>
+  <div class="text-center">
+    <img
+      src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-2130356-1800917.png"
+      alt=""
+      width="350px"
+    />
+    <p class="fs-1">
+      <span class="text-danger fw-bolder">Your cart is empty ! </span>
+    </p>
+    <p class="lead">
+      Looks like you have not added anything to your cart,<br />
+      Go ahead and explore our great foods.
+    </p>
+    <a routerLink="" class="btn btn-danger">Go Home</a>
+  </div>
+</div>
 <!-- cart section -->
-<div class="container mt-5">
+<div *ngIf="email && cart.length != 0" class="container mt-5">
   <div class="row">
     <div class="mt-5"></div>
     <div class="col-lg-8">
-      <!-- table -->
-      <ul class="border border-danger rounded p-3">
-        <li class="d-flex justify-content-around align-items-center">
-          <div>
+      <!-- product list -->
+      <ul class="rounded p-0">
+        <li
+          *ngFor="let product of products"
+          class="d-flex justify-content-around text-danger align-items-center shadow p-3 mb-2 bg-white rounded border-bottom"
+        >
+          <div class="col text-center">
             <img
+              class="rounded-4 border border-light-subtle border-3"
               width="70px"
-              src="https://icons.iconarchive.com/icons/google/noto-emoji-objects/512/63007-shopping-cart-icon.png"
-              alt="product image"
+              [src]="product.image"
+              [alt]="product.title"
             />
           </div>
-          <div>
-            <a class="btn" routerLink=""
-              ><h5><b>Super Mario burger</b></h5></a
+          <div class="col">
+            <a class="btn fw-bold text-danger text-start">
+              {{ product.title }}
+            </a>
+          </div>
+          <div class="col">
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              style="max-width: 4rem"
+              (change)="onChange($event, product.id)"
             >
+              <option
+                *ngFor="let i of select"
+                [ngValue]="i"
+                [selected]="i == product.count"
+              >
+                {{ i }}
+              </option>
+            </select>
           </div>
-          <div>
-            <input
-              type="num"
-              class="form-control"
-              value="1"
-              style="max-width: 3rem"
-            />
-          </div>
-          <div class="h5">3000</div>
-          <div>
-            <a class="text-danger btn"
-              ><i class="fa-solid fa-trash fa-2x"></i
+          <div class="col fw-bold">${{ product.price }}</div>
+          <div class="col">
+            <a (click)="removeFromCart(product.id)" class="text-danger btn"
+              ><i class="fa-solid fa-trash"></i
             ></a>
           </div>
         </li>
       </ul>
       <div class="mt-4 mb-3">
-        <button class="btn btn-danger">Empty Cart</button>
-        <a routerLink="" class="btn btn-secondary ms-5">Shop More</a>
+        <button (click)="emptyCart(email)" class="btn btn-secondary">
+          Empty Cart
+        </button>
+        <a routerLink="" class="btn btn-danger ms-5">Shop More</a>
       </div>
     </div>
     <div class="col-lg-1"></div>
-    <div class="col-lg-3 border border-danger rounded p-3">
+    <div
+      class="col-lg-3 shadow p-3 mb-5 bg-white rounded"
+      style="height: min-content"
+    >
       <div>
         <p>
           Total:
-          <span class="text-danger"> 3000 </span>
+          <span class="text-danger"> {{ total }} </span>
         </p>
-        <p>No of Items: <span>0</span></p>
+        <p>
+          No of Items: <span>{{ cart.length }}</span>
+        </p>
         <h5 class="animate__animated animate__shakeX">
-          Grant Total: <span>3000</span>
+          Grant Total: $<span>{{ total }}</span>
         </h5>
       </div>
 
       <hr />
 
       <div class="mt-2">
-        <a href="" style="text-decoration: none; float: left"
+        <!-- <a href="" style="text-decoration: none; float: left"
           ><i class="fa-solid fa-tag"></i> offers</a
-        >
+        > -->
 
-        <button style="float: right" class="btn btn-success">Check Out</button>
+        <button
+          routerLink="/check-out"
+          style="float: right"
+          class="btn btn-danger"
+        >
+          Check Out
+        </button>
       </div>
     </div>
   </div>

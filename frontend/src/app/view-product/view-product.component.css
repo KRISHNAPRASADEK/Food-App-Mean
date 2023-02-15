@@ -1,3 +1,8 @@
 .text-danger .fa:hover {
   cursor: pointer;
 }
+
+.card-img-top {
+  height: 450px;
+  object-fit: cover;
+}

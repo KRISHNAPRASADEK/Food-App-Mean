@@ -1,1 +1,137 @@
-<p>checkout works!</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="mt-5"></div>
+    <div class="col-lg-6">
+      <div class="h4"><b>Order Form</b></div>
+      <div class="p-3">
+        <form (ngSubmit)="checkout()" [formGroup]="checkoutForm">
+          <div class="form-floating mb-2">
+            <input
+              name="name"
+              formControlName="name"
+              placeholder="Enter Your Name"
+              id="floatingName"
+              type="text"
+              class="form-control"
+            />
+            <label for="floatingName">Enter Name</label>
+          </div>
+          <div
+            *ngIf="
+              this.checkoutForm.get('name')?.errors &&
+              this.checkoutForm.get('name')?.touched
+            "
+            class="text-danger mb-2"
+          >
+            Invalid name
+          </div>
+          <div class="form-floating mb-2">
+            <input
+              name="email"
+              formControlName="email"
+              placeholder="Enter Your Email"
+              id="floatingEmail"
+              type="email"
+              class="form-control"
+            />
+            <label for="floatingEmail">Enter Email ID</label>
+          </div>
+          <div
+            *ngIf="
+              this.checkoutForm.get('email')?.errors &&
+              this.checkoutForm.get('email')?.touched
+            "
+            class="text-danger mb-2"
+          >
+            Invalid email
+          </div>
+          <div class="form-floating mb-2">
+            <input
+              name="mobile"
+              formControlName="mobile"
+              placeholder="Profile mobile"
+              id="floatingMobile"
+              type="text"
+              class="form-control"
+            />
+            <label for="floatingMobile">Enter Mobile No</label>
+          </div>
+          <div
+            *ngIf="
+              this.checkoutForm.get('mobile')?.errors &&
+              this.checkoutForm.get('mobile')?.touched
+            "
+            class="text-danger mb-2"
+          >
+            Invalid mobile no
+          </div>
+          <div class="form-floating">
+            <input
+              name="address"
+              formControlName="address"
+              placeholder="Enter address"
+              id="floatingAddress"
+              type="text"
+              class="form-control"
+            />
+            <label for="floatingAddress">Enter address</label>
+          </div>
+          <div
+            *ngIf="
+              this.checkoutForm.get('address')?.errors &&
+              this.checkoutForm.get('address')?.touched
+            "
+            class="text-danger mb-2"
+          >
+            Invalid address
+          </div>
+          <button type="submit" class="btn btn-danger w-100 mt-3">
+            Click here for Payment
+          </button>
+
+          <div class="text-danger mb-2">{{ errorMsg }}</div>
+          <!-- <div class="mt-2">
+            <button type="submit" class="btn btn-danger">
+              Login &nbsp;
+              <span
+                *ngIf="successMsg"
+                class="spinner-border text-white"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </span>
+            </button>
+          </div> -->
+        </form>
+      </div>
+    </div>
+    <!-- <div class="col-lg-1"></div> -->
+    <div class="col-lg-6 mt-5">
+      <!-- product list -->
+      <ul class="mt-1">
+        <div class="h5 text-secondary"><b>Order Items:</b></div>
+        <li
+          *ngFor="let product of products"
+          class="d-flex justify-content-around text-start align-items-center shadow p-3 bg-white rounded mb-2"
+        >
+          <div class="col">
+            <img
+              width="50px"
+              class="rounded-4 border border-light-subtle border-3"
+              [src]="product.image"
+              [alt]="product.title"
+            />
+          </div>
+          <div class="h6 col">{{ product.title }}</div>
+          <div class="h6 col">
+            <div class="text-center">{{ product.count }}</div>
+          </div>
+          <div class="h6 col">${{ product.price }}</div>
+        </li>
+        <div class="h5 shadow p-3 bg-white rounded" style="width: max-content">
+          <b>Grant Total: ${{ total }}</b>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,15 +1,12 @@
 <!-- Navigation-->
 <nav
-  class="navbar fixed-top navbar-expand-lg navbar-light bg-danger"
-  data-bs-theme="dark"
+  class="navbar fixed-top navbar-expand-lg navbar-light shadow-sm"
+  id="mainNav"
 >
   <div class="container px-4 px-lg-5">
-    <a class="navbar-brand" routerLink="">
-      <img
-        width="50px"
-        src="https://cdn-icons-png.flaticon.com/512/2331/2331966.png"
-        alt=""
-      />&nbsp;<b> Food Ordering App</b>
+    <i class="fa-solid fa-burger fa-2x text-danger"></i>
+    <a class="fst-italic navbar-brand text-danger fw-bolder" routerLink="">
+      &nbsp; YO! JUNK
     </a>
 
     <button
@@ -29,6 +26,7 @@
         <li class="nav-item">
           <form class="d-flex">
             <input
+              (keyup)="search($event)"
               type="text"
               placeholder="search for products"
               class="form-control"
@@ -41,18 +39,49 @@
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link active" routerLink="view-cart"
-            >&nbsp; &nbsp;<i class="fa-solid fa-cart-plus"></i> Cart
-            <span class="badge bg-white text-dark rounded-pill">0</span>
+          <a class="btn" routerLink="view-cart">
+            <i class="fa-solid fa-cart-plus me-1"></i>
+            Cart
+            <span class="badge bg-dark text-white ms-1 rounded-pill">{{
+              cartCount
+            }}</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li *ngIf="!username" class="nav-item">
           <a
             class="nav-link active dropdown-item btn"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
             >&nbsp; &nbsp;<i class="fa-solid fa-user"></i> Login</a
           >
+        </li>
+        <li *ngIf="username" class="nav-item dropdown">
+          <a
+            class="nav-link active dropdown-toggle bg rounded-pill px-3 mb-1 mb-lg-0"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            &nbsp;<i class="fa-solid fa-user"></i> {{ username }}
+          </a>
+          <ul class="dropdown-menu profile">
+            <li>
+              <a class="dropdown-item"
+                ><i class="fa-solid fa-user-gear"></i> My Profile</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item"
+                ><i class="fa-solid fa-circle-info me-1"></i> More</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" (click)="logout()"
+                ><i class="fa-solid fa-user-slash"></i> Logout</a
+              >
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
@@ -61,6 +90,7 @@
 
 <!-- modal for login -->
 <div
+  data-mdb-delay="3000"
   class="modal fade"
   id="staticBackdrop"
   data-bs-backdrop="static"
@@ -71,8 +101,10 @@
 >
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="fw-bold modal-title s-5" id="staticBackdropLabel">Login</h4>
+      <div class="modal-header bg-danger text-white">
+        <h4 class="fw-bold modal-title s-5" id="staticBackdropLabel">
+          Login here
+        </h4>
         <button
           type="button"
           class="btn-close"
@@ -81,77 +113,94 @@
         ></button>
       </div>
       <div class="modal-body">
-        <div class="text-center">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsBChUr8Nod7bNKV2pWb05nSgEMD2PKHiQuA&usqp=CAU"
-            alt="no image"
-          />
+        <div class="container px-lg-5">
+          <div class="row">
+            <div class="col-6">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/2843/2843624.png"
+                alt="no image"
+                width="150px"
+              />
+            </div>
+            <div class="col-6 mt-5 text-danger fw-bolder">
+              Get access to your Orders, Wishlist and Recommendations
+            </div>
+          </div>
         </div>
-        <form class="p-3">
-          <div class="form-floating mb-2">
-            <input
-              name="email"
-              formControlName="email"
-              placeholder="Enter Your Email"
-              id="floatingName"
-              type="text"
-              class="form-control"
-            />
-            <label for="floatingName">Enter Your Email ID</label>
-          </div>
-          <!-- <div
-            *ngIf="
-              this.fundTransferForm.get('toAcno')?.errors &&
-              this.fundTransferForm.get('toAcno')?.touched
-            "
-            class="text-danger mb-2"
-          >
-            Invalid Account Number
-          </div> -->
-          <div class="form-floating mt-4 mb-2">
-            <input
-              name="pswd"
-              formControlName="pswd"
-              placeholder="Profile Password"
-              id="floatingPassword"
-              type="password"
-              class="form-control"
-            />
-            <label for="floatingPassword">Enter Your Password</label>
-          </div>
-          <!-- <div
-            *ngIf="
-              this.fundTransferForm.get('pswd')?.errors &&
-              this.fundTransferForm.get('pswd')?.touched
-            "
-            class="text-danger mb-2"
-          >
-            Invalid Password
-          </div> -->
-        </form>
+
+        <div class="p-3">
+          <form (ngSubmit)="login()" [formGroup]="loginForm">
+            <div class="form-floating mb-2">
+              <input
+                name="email"
+                formControlName="email"
+                placeholder="Enter Email"
+                id="floatingEmail"
+                type="text"
+                class="form-control"
+              />
+              <label for="floatingEmail">Enter Email</label>
+            </div>
+            <div
+              *ngIf="
+                this.loginForm.get('email')?.errors &&
+                this.loginForm.get('email')?.touched
+              "
+              class="text-danger mb-2"
+            >
+              Invalid Email
+            </div>
+            <div class="form-floating mb-2">
+              <input
+                name="password"
+                formControlName="password"
+                placeholder="Enter Password"
+                id="floatingPassword"
+                type="password"
+                class="form-control"
+              />
+              <label for="floatingPassword">Enter Password</label>
+            </div>
+            <div
+              *ngIf="
+                this.loginForm.get('password')?.errors &&
+                this.loginForm.get('password')?.touched
+              "
+              class="text-danger mb-2"
+            >
+              Invalid Password
+            </div>
+            <div class="text-danger mb-2">{{ errorMsg }}</div>
+            <div class="mt-2">
+              <button type="submit" class="btn btn-danger">
+                Login &nbsp;
+                <span
+                  *ngIf="successMsg"
+                  class="spinner-border text-white"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
         <span class="ms-3">
           New User? Click Here to
           <a
             class="text-primary"
-            type="button"
+            type="submit"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop1"
             >Register</a
           >
         </span>
       </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button type="submit" class="btn btn-primary">Login</button>
-      </div>
     </div>
   </div>
 </div>
 
-<!-- modal for Register -->
+<!-- modal for Registration  -->
 <div
   class="modal fade"
   id="staticBackdrop1"
@@ -163,7 +212,7 @@
 >
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-danger text-white">
         <h4 class="fw-bold modal-title s-5" id="staticBackdropLabel">
           Register here
         </h4>
@@ -177,89 +226,88 @@
       <div class="modal-body">
         <div class="text-center">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsBChUr8Nod7bNKV2pWb05nSgEMD2PKHiQuA&usqp=CAU"
+            src="https://cdn-icons-png.flaticon.com/512/3080/3080164.png"
             alt="no image"
+            width="100px"
           />
         </div>
-        <form class="p-3">
-          <div class="form-floating mb-2">
-            <input
-              name="name"
-              formControlName="name"
-              placeholder="Enter Your Name"
-              id="floatingName"
-              type="text"
-              class="form-control"
-            />
-            <label for="floatingName">Enter Your Name</label>
-          </div>
-          <!-- <div
-            *ngIf="
-              this.fundTransferForm.get('toAcno')?.errors &&
-              this.fundTransferForm.get('toAcno')?.touched
-            "
-            class="text-danger mb-2"
-          >
-            Invalid Account Number
-          </div> -->
-          <div class="form-floating mb-2">
-            <input
-              name="email"
-              formControlName="email"
-              placeholder="Enter Your Email"
-              id="floatingEmail"
-              type="email"
-              class="form-control"
-            />
-            <label for="floatingEmail">Enter Your Email ID</label>
-          </div>
-          <!-- <div
-            *ngIf="
-              this.fundTransferForm.get('toAcno')?.errors &&
-              this.fundTransferForm.get('toAcno')?.touched
-            "
-            class="text-danger mb-2"
-          >
-            Invalid Account Number
-          </div> -->
-          <div class="form-floating mb-2">
-            <input
-              name="pswd"
-              formControlName="pswd"
-              placeholder="Profile Password"
-              id="floatingPassword"
-              type="password"
-              class="form-control"
-            />
-            <label for="floatingPassword">Enter Your Password</label>
-          </div>
-          <!-- <div
-            *ngIf="
-              this.fundTransferForm.get('pswd')?.errors &&
-              this.fundTransferForm.get('pswd')?.touched
-            "
-            class="text-danger mb-2"
-          >
-            Invalid Password
-          </div> -->
-        </form>
-        <span class="ms-3">
-          Existing User?
-          <a
-            class="text-primary"
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-            >Log in</a
-          >
-        </span>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button type="submit" class="btn btn-primary">Register</button>
+        <div class="p-3">
+          <form (ngSubmit)="register()" [formGroup]="registerForm">
+            <div class="form-floating mb-2">
+              <input
+                name="username"
+                formControlName="username"
+                placeholder="Enter Name"
+                id="floatingName"
+                type="text"
+                class="form-control"
+              />
+              <label for="floatingName">Enter Name</label>
+            </div>
+            <div
+              *ngIf="
+                this.registerForm.get('username')?.errors &&
+                this.registerForm.get('username')?.touched
+              "
+              class="text-danger mb-2"
+            >
+              Invalid name
+            </div>
+            <div class="form-floating mb-2">
+              <input
+                name="email"
+                formControlName="email"
+                placeholder="Enter Email"
+                id="floatingEmail"
+                type="text"
+                class="form-control"
+              />
+              <label for="floatingEmail">Enter Email</label>
+            </div>
+            <div
+              *ngIf="
+                this.registerForm.get('email')?.errors &&
+                this.registerForm.get('email')?.touched
+              "
+              class="text-danger mb-2"
+            >
+              Invalid Email
+            </div>
+            <div class="form-floating mb-2">
+              <input
+                name="password"
+                formControlName="password"
+                placeholder="Enter Password"
+                id="floatingPassword"
+                type="password"
+                class="form-control"
+              />
+              <label for="floatingPassword">Enter Password</label>
+            </div>
+            <div
+              *ngIf="
+                this.registerForm.get('password')?.errors &&
+                this.registerForm.get('password')?.touched
+              "
+              class="text-danger mb-2"
+            >
+              Invalid Password
+            </div>
+            <div class="mt-2">
+              <button type="submit" class="btn btn-danger">Register</button>
+              <span class="ms-3">
+                Existing User?
+                <a
+                  class="text-primary"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                  >Log in</a
+                >
+              </span>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
