@@ -32,7 +32,7 @@ const jwtMiddleware = (req, res, next) => {
   console.log(token);
   try {
     //verify token
-    const data = jwt.verify(token, "abcd");
+    const data = jwt.verify(token, "B68DC6BECCF4A68C3D8D78FE742E2");
     req.email = data.email;
     console.log("valid token");
     next();
@@ -138,16 +138,34 @@ server.put("/updateCartItemCount", jwtMiddleware, (req, res) => {
 server.put("/emptyCart", jwtMiddleware, (req, res) => {
   console.log("inside emptyCart api");
   //async
-  dataService
-    .emptyCart(req.body.email)
-    .then((result) => {
-      res.status(result.statusCode).json(result);
-    });
+  dataService.emptyCart(req.body.email).then((result) => {
+    res.status(result.statusCode).json(result);
+  });
 });
 
 // get myitems cart after login  from user profile api
-server.get("/getWishlist/:email", (req, res) => {
+server.get("/getWishlist/:email", jwtMiddleware, (req, res) => {
   dataService.getWishlist(req.params.email).then((result) => {
     res.status(result.statusCode).json(result);
   });
+});
+
+// add to Checkout a  transcation jwtmiddleare used to verify token during login
+server.post("/addToCheckout", jwtMiddleware, (req, res) => {
+  console.log("inside addToCheckout api");
+  //async
+  dataService
+    .addToCheckout(
+      req.body.email,
+      req.body.orderID,
+      req.body.transactionID,
+      req.body.dateAndTime,
+      req.body.amount,
+      req.body.status,
+      req.body.products,
+      req.body.detailes
+    )
+    .then((result) => {
+      res.status(result.statusCode).json(result);
+    });
 });

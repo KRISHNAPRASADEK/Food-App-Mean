@@ -1,3 +1,5 @@
+<app-header [searchBarHide]="wishlistStatus"></app-header>
+<!-- please login -->
 <div
   *ngIf="!email"
   class="d-flex align-items-center justify-content-center"
@@ -17,16 +19,61 @@
   </div>
 </div>
 
+<!-- wishlist empty -->
+<div
+  *ngIf="email && wishlist.length == 0"
+  class="d-flex align-items-center justify-content-center"
+  style="min-height: 100vh"
+>
+  <div class="text-center">
+    <img
+      src="https://www.havenarth.com/assets/images/empty-cart.png"
+      alt=""
+      class="w-50 ms-5"
+    />
+    <p class="fs-1">
+      <span class="text-danger fw-bolder">Your wishlist is empty ! </span>
+    </p>
+    <p class="lead">
+      Looks like you have not added anything to your wishlist,<br />
+      Go ahead and explore our tasty foods.
+    </p>
+    <a routerLink="" class="btn btn-danger">Go Home</a>
+  </div>
+</div>
+
 <!--Wishlist  Section-->
-<section *ngIf="email" class="py-5">
+<section *ngIf="email && wishlist.length != 0" class="py-5">
   <div class="container px-2 px-lg-2 mt-5">
     <div
       class="row gx-4 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
     >
-      <div class="col mb-5" *ngFor="let product of products">
-        <div class="card h-100">
+      <div
+        class="col mb-5"
+        *ngFor="let product of products | filter : searchItem : 'title'"
+      >
+        <!-- search not found -->
+        <div *ngIf="product === -1" class="d-flex mt-5 justify-content-center">
+          <div class="text-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1178/1178479.png"
+              alt=""
+              width="100px"
+            />
+            <p class="fs-3">
+              <span class="text-danger">Sorry, no results found! </span>
+            </p>
+            <p class="lead" style="width: 50vw">
+              Please check the spelling or try searching for something else
+            </p>
+          </div>
+        </div>
+
+        <!-- Card -->
+        <div *ngIf="product != -1" class="card h-100 shadow bg-white rounded">
           <!-- Product image-->
           <img
+            height="50px"
             class="card-img-top"
             [src]="product.image"
             [alt]="product.title"
@@ -46,11 +93,23 @@
               <h5 class="mt-2">${{ product.price }}</h5>
             </div>
             <div class="float-end">
-              <span class="ms-4 text-danger"
-                ><i class="fa fa-trash fa-fade fa-2x"></i>
+              <span
+                class="ms-4 text-danger"
+                (click)="removeFromWishlist(product.id)"
+              >
+                <i class="fa-solid fa-heart-circle-xmark fa-2x"></i>
               </span>
-              <div class="text-success mt-3">
-                <i class="ms-3 fa fa-solid fa-cart-plus fa-beat fa-2x"></i>
+              <div class="">
+                <i
+                  class="ms-4 bi bi-cart-plus-fill fa-2x text-secondary"
+                  (click)="addToCart(product.id, 1)"
+                  *ngIf="email && cart.indexOf(product.id) == -1"
+                ></i>
+                <i
+                  class="ms-4 bi bi-cart-x-fill fa-2x text-success"
+                  (click)="removeFromCart(product.id)"
+                  *ngIf="email && cart.indexOf(product.id) >= 0"
+                ></i>
               </div>
             </div>
           </div>

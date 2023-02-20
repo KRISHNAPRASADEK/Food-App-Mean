@@ -78,7 +78,10 @@ const login = (email, password) => {
   }).then((result) => {
     if (result) {
       //generate token
-      const token = jwt.sign({ email }, "abcd");
+
+      const token = jwt.sign({ email }, "B68DC6BECCF4A68C3D8D78FE742E2", {
+        algorithm: "HS256",
+      });
       return {
         statusCode: 200,
         message: "Login Successful",
@@ -247,7 +250,7 @@ const emptyCart = (email) => {
 
 //updateCartItemCount
 const updateCartItemCount = (email, id, count) => {
-  console.log("Inside removefromwishlist function in dataservice");
+  console.log("Inside updateCartItemCount function in dataservice");
   let productId = Number(id);
   count = Number(count);
   return db.User.findOneAndUpdate(
@@ -283,7 +286,9 @@ const getWishlist = (email) => {
   return db.User.findOne({ email }).then((result) => {
     if (result) {
       //generate token
-      const token = jwt.sign({ email }, "abcd");
+      const token = jwt.sign({ email }, "B68DC6BECCF4A68C3D8D78FE742E2", {
+        algorithm: "HS256",
+      });
       return {
         statusCode: 200,
         message: `got my items of ${result.username}`,
@@ -303,6 +308,54 @@ const getWishlist = (email) => {
   });
 };
 
+// addToCheckout
+const addToCheckout = (
+  email,
+  orderID,
+  transactionID,
+  dateAndTime,
+  amount,
+  status,
+  products,
+  detailes
+) => {
+  console.log("Inside addToCheckout function in dataservice");
+  // let productId = Number(id);
+
+  return db.User.findOne({ email }).then((result) => {
+    if (result) {
+      console.log(result);
+      // email is present in db
+      result.checkout.push({
+        orderID,
+        transactionID,
+        dateAndTime,
+        amount,
+        status,
+        products,
+        detailes,
+      });
+      result.save();
+      // to update in mongodb
+      return {
+        statusCode: 200,
+        message: `transaction ${transactionID} added to checkout`,
+        name: detailes.name,
+        mobile: detailes.mobile,
+        orderID,
+        transactionID,
+        dateAndTime,
+        amount,
+      };
+    } else {
+      return {
+        statusCode: 404,
+        message: "Invalid / server error",
+      };
+    }
+  });
+};
+
 module.exports = {
   allProducts,
   viewProduct,
@@ -315,4 +368,5 @@ module.exports = {
   removeFromCart,
   updateCartItemCount,
   emptyCart,
+  addToCheckout,
 };

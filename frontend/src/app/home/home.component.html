@@ -1,3 +1,4 @@
+<app-header [searchBarHide]="true"></app-header>
 <!-- Section-->
 <section class="py-5">
   <div class="container px-2 px-lg-2 mt-5">
@@ -38,17 +39,18 @@
         class="col mb-5"
         *ngFor="let product of products | filter : searchItem : 'title'"
       >
-        <div *ngIf="product === -1" class="d-flex mt-5 justify-content-center">
+        <div *ngIf="product === -1" class="d-flex justify-content-center mb-5">
           <div class="text-center">
             <img
               src="https://cdn-icons-png.flaticon.com/512/1178/1178479.png"
               alt=""
-              width="100px"
+              class="w-25"
             />
+
             <p class="fs-3">
               <span class="text-danger">Sorry, no results found! </span>
             </p>
-            <p class="lead" style="width: 100vw">
+            <p class="lead" style="width: 50vw">
               Please check the spelling or try searching for something else
             </p>
             <!-- <a routerLink="" class="btn btn-danger">Go Home</a> -->

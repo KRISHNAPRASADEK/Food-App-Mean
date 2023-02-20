@@ -1,1 +1,133 @@
-<p>order-track works!</p>
+<app-header></app-header>
+<!-- wishlist empty -->
+<div
+  *ngIf="!success"
+  class="d-flex align-items-center justify-content-center"
+  style="min-height: 100vh"
+>
+  <div class="text-center">
+    <i class="fa-solid fa-truck-fast display-1 text-danger"></i>
+    <i class="fa-solid fa-store-slash display-6 text-danger ms-2 mb-3"></i>
+    <p class="fs-1">
+      <span class="text-danger fw-bolder">No Order Found ! </span>
+    </p>
+    <p class="lead">
+      Looks like you have not made your order yet,<br />
+      Go ahead and explore our tasty foods.
+    </p>
+    <a routerLink="/view-cart" class="btn btn-danger">Go to Cart</a>
+  </div>
+</div>
+
+<section class="vh-100">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div
+          class="bg-white shadow card-stepper text-black"
+          style="border-radius: 16px"
+        >
+          <div class="card-body p-5">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+              <div>
+                <h5 class="mb-0">
+                  <span class="fw-bold">Order ID: </span>
+                  <span class="text-primary font-weight-bold">#Y34XDHR</span>
+                </h5>
+                <a
+                  type="button"
+                  class="mt-3 btn btn-danger shadow"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  View Detailes
+                </a>
+              </div>
+              <div class="text-end">
+                <p class="mb-0">
+                  <span class="fw-bold">Expected Arrival: </span>
+                  <span>31/02/23</span>
+                </p>
+                <p class="mb-0">
+                  <span class="fw-bold">USPS: </span>
+                  <span class="font-weight-bold">234094567242423422898</span>
+                </p>
+              </div>
+            </div>
+
+            <ul
+              id="progressbar-2"
+              class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2"
+            >
+              <li class="step0 active text-center" id="step1"></li>
+              <li class="step0 active text-center" id="step2"></li>
+              <li class="step0 active text-center" id="step3"></li>
+              <li class="step0 text-muted text-end" id="step4"></li>
+            </ul>
+
+            <div class="d-flex justify-content-between">
+              <div class="d-lg-flex align-items-center text-success">
+                <i class="fas fa-clipboard-list fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                <div>
+                  <p class="fw-bold mb-1">Order</p>
+                  <p class="fw-bold mb-0">Processed</p>
+                </div>
+              </div>
+              <div class="d-lg-flex align-items-center">
+                <i class="fas fa-box-open fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                <div>
+                  <p class="fw-bold mb-1">Order</p>
+                  <p class="fw-bold mb-0">Shipped</p>
+                </div>
+              </div>
+              <div class="d-lg-flex align-items-center">
+                <i class="fas fa-shipping-fast fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                <div>
+                  <p class="fw-bold mb-1">Order</p>
+                  <p class="fw-bold mb-0">En Route</p>
+                </div>
+              </div>
+              <div class="d-lg-flex align-items-center">
+                <i class="fas fa-home fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                <div>
+                  <p class="fw-bold mb-1">Order</p>
+                  <p class="fw-bold mb-0">Arrived</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

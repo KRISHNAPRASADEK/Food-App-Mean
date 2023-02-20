@@ -15,6 +15,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { OrderTrackComponent } from './order-track/order-track.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxPayPalModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   errorMsg: string = '';
   successMsg: any = false;
   cartCount: number = 0;
+  @Input() searchBarHide: boolean = false;
 
   username: string = '';
   email: string = '';

@@ -2,3 +2,6 @@ li img {
   object-fit: cover;
   height: 50px;
 }
+.navbar-brand {
+  font-family: "Roboto", sans-serif;
+}

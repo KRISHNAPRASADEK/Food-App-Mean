@@ -143,6 +143,36 @@ export class ApiService {
       this.appendToken()
     );
   }
+  // create_time: '2023-02-20T05:19:08Z';
+  // id: '2NF61948LD649100D';
+
+  //addToCheckout
+  addToCheckout(
+    email: any,
+    orderID: any,
+    transactionID: any,
+    dateAndTime: any,
+    amount: any,
+    status: any,
+    products: any,
+    detailes: any
+  ) {
+    const body = {
+      email,
+      orderID,
+      transactionID,
+      dateAndTime,
+      amount,
+      status,
+      products,
+      detailes,
+    };
+    return this.http.post(
+      'http://localhost:3000/addToCheckout/',
+      body,
+      this.appendToken()
+    );
+  }
 
   getWishlist(email: any) {
     return this.http.get(

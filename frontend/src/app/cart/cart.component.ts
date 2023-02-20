@@ -22,10 +22,9 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.email = localStorage.getItem('email') || '';
 
-    // if (this.email) {
-    this.getMyItems();
-
-    // }
+    if (this.email) {
+      this.getMyItems();
+    }
     this.allProducts = JSON.parse(localStorage.getItem('products') || '');
 
     // if (localStorage.getItem('products')) {
@@ -73,6 +72,8 @@ export class CartComponent implements OnInit {
         this.products.map((product: any) => {
           this.total += product.price;
         });
+        this.total = Number(this.total.toFixed(2));
+
         localStorage.setItem('checkout', JSON.stringify(this.products));
 
         this.api.apiCart = cartNew;

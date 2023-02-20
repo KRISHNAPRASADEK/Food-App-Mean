@@ -1,9 +1,10 @@
+<app-header *ngIf="!btnprintHide"></app-header>
 <div class="container mt-5">
-  <div class="row">
+  <div *ngIf="!successMsg" class="row">
     <div class="mt-5"></div>
-    <div class="col-lg-6">
-      <div class="h4"><b>Order Form</b></div>
-      <div class="p-3">
+    <div class="col-lg-5 shadow p-3 bg-white rounded mt-3">
+      <div class="h4 text-center"><b>Order Form</b></div>
+      <div class="p-3" *ngIf="!checkoutValid">
         <form (ngSubmit)="checkout()" [formGroup]="checkoutForm">
           <div class="form-floating mb-2">
             <input
@@ -85,7 +86,11 @@
           >
             Invalid address
           </div>
-          <button type="submit" class="btn btn-danger w-100 mt-3">
+          <button
+            *ngIf="!checkoutValid"
+            type="submit"
+            class="btn btn-danger w-100 mt-3"
+          >
             Click here for Payment
           </button>
 
@@ -104,15 +109,44 @@
           </div> -->
         </form>
       </div>
+      <div *ngIf="checkoutValid" class="p-3">
+        <div class="col">
+          <p class="mb-1 fw-bold">Name</p>
+        </div>
+        <div class="col">
+          <p class="text-muted mb-0">{{ name }}</p>
+        </div>
+        <hr />
+        <div class="col">
+          <p class="mb-1 fw-bold">Email</p>
+        </div>
+        <div class="col">
+          <p class="text-muted mb-0">{{ email }}</p>
+        </div>
+        <hr />
+        <div class="col">
+          <p class="mb-1 fw-bold">Mobile</p>
+        </div>
+        <div class="col">
+          <p class="text-muted mb-0">{{ mobile }}</p>
+        </div>
+        <hr />
+        <div class="col">
+          <p class="mb-1 fw-bold">Address</p>
+        </div>
+        <div class="col">
+          <p class="text-muted mb-0">{{ address }}</p>
+        </div>
+      </div>
     </div>
-    <!-- <div class="col-lg-1"></div> -->
-    <div class="col-lg-6 mt-5">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-6 mt-3">
       <!-- product list -->
-      <ul class="mt-1">
+      <ul class="shadow p-3 bg-white rounded">
         <div class="h5 text-secondary"><b>Order Items:</b></div>
         <li
           *ngFor="let product of products"
-          class="d-flex justify-content-around text-start align-items-center shadow p-3 bg-white rounded mb-2"
+          class="d-flex justify-content-around text-start align-items-center mb-2 px-4 border-bottom pb-2"
         >
           <div class="col">
             <img
@@ -128,10 +162,123 @@
           </div>
           <div class="h6 col">${{ product.price }}</div>
         </li>
-        <div class="h5 shadow p-3 bg-white rounded" style="width: max-content">
-          <b>Grant Total: ${{ total }}</b>
+        <div class="d-flex h5 mt-3 justify-content-center">
+          <span class="w-75 rounded bg-primary p-2 text-white text-center">
+            Grant Total : ${{ total }}
+          </span>
+        </div>
+
+        <p *ngIf="checkoutValid" class="text-danger text-center fw-bold mt-4">
+          <i class="fa-solid fa-circle-info"></i> Choose below any options to
+          make payment
+        </p>
+
+        <!-- paypal -->
+        <div *ngIf="checkoutValid" class="d-flex justify-content-center">
+          <ngx-paypal class="w-75" [config]="payPalConfig"></ngx-paypal>
         </div>
       </ul>
+    </div>
+  </div>
+
+  <!-- payment page -->
+  <div *ngIf="successMsg" class="row d-flex justify-content-center">
+    <div class="mt-5"></div>
+
+    <div class="shadow p-3 bg-white my-2 rounded col-md-8">
+      <div class="card-body mx-3">
+        <div class="container">
+          <p
+            class="my-2 mx-5 d-flex align-items-center justify-content-center fw-bolder fs-2"
+          >
+            Payment Success
+            <i class="fa-regular fa-circle-check fa-2x text-success ms-1"></i>
+          </p>
+          <div class="row">
+            <div class="col-xl-5">
+              <p>Name</p>
+            </div>
+            <div class="col-xl-7">
+              <p class="float-end">{{ name }}</p>
+            </div>
+            <hr />
+          </div>
+          <div class="row">
+            <div class="col-xl-5">
+              <p>Mobile</p>
+            </div>
+            <div class="col-xl-7">
+              <p class="float-end">{{ mobile }}</p>
+            </div>
+            <hr />
+          </div>
+          <div class="row">
+            <div class="col-xl-5">
+              <p>Order Id</p>
+            </div>
+            <div class="col-xl-7">
+              <p class="float-end">{{ orderID }}</p>
+            </div>
+            <hr />
+          </div>
+          <div class="row">
+            <div class="col-xl-10">
+              <p>Transaction Id</p>
+            </div>
+            <div class="col-xl-2">
+              <p class="float-end">{{ transactionID }}</p>
+            </div>
+            <hr />
+          </div>
+          <div class="row">
+            <div class="col-xl-4">
+              <p>Date and Time</p>
+            </div>
+            <div class="col-xl-8">
+              <p class="float-end">
+                {{ dateAndTime }}
+              </p>
+            </div>
+            <hr />
+          </div>
+          <div class="row">
+            <div class="col-xl-10">
+              <p>Amount</p>
+            </div>
+            <div class="col-xl-2">
+              <p class="float-end">{{ total }}</p>
+            </div>
+            <hr />
+          </div>
+          <div class="fst-italic navbar-brand text-danger fw-bolder row">
+            <div class="col-xl-6 d-flex align-items-center">
+              <i class="fa-solid fa-burger fa-2x text-danger"></i>
+              &nbsp;
+              <span> YO! JUNK</span>
+            </div>
+
+            <div class="col-xl-6">
+              <img
+                src="https://i.ibb.co/hZDLCRT/signature.png"
+                alt="signature"
+                style="width: 40px"
+                class="float-end"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!btnprintHide" class="col-md-4 align-self-end text-center mb-5">
+      <button class="btn btn-danger me-2 shadow" (click)="printBill()">
+        <i class="fa-solid fa-print"></i> Print Bill
+      </button>
+      <a class="btn btn-danger me-2 shadow" routerLink=""
+        ><i class="fa-solid fa-house"></i> Go to Home</a
+      >
+      <a class="btn btn-danger shadow mt-2" routerLink="/track-order"
+        ><i class="fa-solid fa-truck-fast"></i> Go to My Orders</a
+      >
     </div>
   </div>
 </div>

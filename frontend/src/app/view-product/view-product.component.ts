@@ -132,6 +132,10 @@ export class ViewProductComponent implements OnInit {
         this.cart = cartNew;
         this.api.apiCart = cartNew;
         this.api.cartCount.next(cartNew);
+        this.wishlist = [];
+        result.wishlist.map((i: any) => {
+          this.wishlist.push(i.productId);
+        });
 
         localStorage.setItem('username', result.username);
         localStorage.setItem('email', result.email);
@@ -144,5 +148,4 @@ export class ViewProductComponent implements OnInit {
       }
     );
   }
-  
 }
