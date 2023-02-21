@@ -150,6 +150,13 @@ server.get("/getWishlist/:email", jwtMiddleware, (req, res) => {
   });
 });
 
+// get my order cart after login  from user profile api
+server.get("/getMyOrders/:email", jwtMiddleware, (req, res) => {
+  dataService.getMyOrders(req.params.email).then((result) => {
+    res.status(result.statusCode).json(result);
+  });
+});
+
 // add to Checkout a  transcation jwtmiddleare used to verify token during login
 server.post("/addToCheckout", jwtMiddleware, (req, res) => {
   console.log("inside addToCheckout api");

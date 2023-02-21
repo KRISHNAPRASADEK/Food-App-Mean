@@ -308,6 +308,30 @@ const getWishlist = (email) => {
   });
 };
 
+//getMyOrders
+const getMyOrders = (email) => {
+  console.log("Inside getMyOrders function in dataservice");
+  // check email in mongodb
+  return db.User.findOne({ email }).then((result) => {
+    if (result) {
+      //generate token
+      const token = jwt.sign({ email }, "B68DC6BECCF4A68C3D8D78FE742E2", {
+        algorithm: "HS256",
+      });
+      return {
+        statusCode: 200,
+        message: `got orders of ${result.username}`,
+        checkout: result.checkout,
+      };
+    } else {
+      return {
+        statusCode: 403,
+        message: "Invalid email / server issues",
+      };
+    }
+  });
+};
+
 // addToCheckout
 const addToCheckout = (
   email,
@@ -369,4 +393,5 @@ module.exports = {
   updateCartItemCount,
   emptyCart,
   addToCheckout,
+  getMyOrders,
 };

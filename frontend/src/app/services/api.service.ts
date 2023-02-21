@@ -180,4 +180,10 @@ export class ApiService {
       this.appendToken()
     );
   }
+  getMyOrders(email: any) {
+    return this.http.get(
+      'http://localhost:3000/getMyOrders/' + email,
+      this.appendToken()
+    );
+  }
 }
