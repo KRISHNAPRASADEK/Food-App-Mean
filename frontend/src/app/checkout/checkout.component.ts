@@ -92,8 +92,7 @@ export class CheckoutComponent implements OnInit {
     const amount = JSON.stringify(this.total);
     this.payPalConfig = {
       currency: 'USD',
-      clientId:
-        'AXEDesScvVq4CuOKo3UEI8nnHkfEsqqzgwpZuPAp5lZzF1RD5qcI8T1TQjUowfU8ks0sEoi2Kj3w3CQs',
+      clientId: 'secretid',
       createOrderOnClient: (data) =>
         <ICreateOrderRequest>{
           intent: 'CAPTURE',
