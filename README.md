@@ -13,3 +13,11 @@ Features:
 - Wishlist, Add to cart, Track orders
 - Integrated payment gateway using PayPal sandbox
 - Option for selecting quantity of particular item
+
+Pages:
+- Home
+- Wishlist
+- Cart
+- Checkout
+- View product
+- My orders
