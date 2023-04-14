@@ -3,7 +3,7 @@
 
 This is a E-commerce Mean Stack Application I have built as a part of my training for ordering foods online,
 <br/>
-technologies used Angular JS, Node JS, Express JS and MongoDB.
+technologies used Angular, Node JS, Express JS and MongoDB.
 
 Features:
 - Login, Registration with validation
